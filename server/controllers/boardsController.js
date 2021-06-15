@@ -27,5 +27,13 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const getBoardById = (req, res, next) => {
+  const { id } = req.params;
+  Board.find({ _id: id }).then((board) => {
+    res.json(board);
+  });
+};
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.getBoardById = getBoardById;
