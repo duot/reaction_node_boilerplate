@@ -1,0 +1,3 @@
+
+## get board by id
+GET http://localhost:5000/api/boards/60c78a908ff813198bdbb198
