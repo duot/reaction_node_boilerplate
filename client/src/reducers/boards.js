@@ -5,7 +5,11 @@ export default function boards(state = [], action) {
       return boardWithoutLists;
     }
     case "FETCH_BOARDS_SUCCESS": {
-      return action.boards;
+      const boardsWithoutLists = action.boards.map((board) => {
+        const { lists, ...boardWithoutLists } = board;
+        return boardWithoutLists;
+      });
+      return boardsWithoutLists;
     }
     case "CREATE_BOARD_SUCCESS": {
       const newBoard = action.board;
