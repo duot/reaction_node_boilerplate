@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+require("./list");
+require("./card");
+
 const { ObjectId } = Schema.Types;
 const BoardSchema = new Schema(
   {

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+require("./card");
+
 const ListSchema = new Schema(
   {
     title: String,
