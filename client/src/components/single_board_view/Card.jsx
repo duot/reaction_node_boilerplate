@@ -1,5 +1,6 @@
 import React from "react"
 import { useSelector } from "react-redux"
+import CardLabel from "./CardLabel"
 
 export default function Card({ cardId }) {
 	const card = useSelector(state => state.cards.find((card) => {
@@ -11,12 +12,7 @@ export default function Card({ cardId }) {
 			<div className="card ">
 					<i className="edit-toggle edit-icon sm-icon"></i>
 					<div className="card-info">
-						<div className="card-label green colorblindable"></div>
-						<div className="card-label yellow colorblindable"></div>
-						<div className="card-label red colorblindable"></div>
-						<div className="card-label orange colorblindable"></div>
-						<div className="card-label blue colorblindable"></div>
-						<div className="card-label purple colorblindable"></div>
+						{card.labels.map((label) => <CardLabel key={label} label={label} />)}
 						<p>
 							Cards do many cool things. Click on this card to
 							open it and learn more...
