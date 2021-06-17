@@ -5,7 +5,6 @@ import List from "./List";
 
 const Board = (props) => {
   const id = props.match.params.id;
-  console.log({ id});
 
   const dispatch = useDispatch();
 
@@ -20,11 +19,7 @@ const Board = (props) => {
   useEffect(() => {
     if (!id) return;
     dispatch(actions.fetchBoard(id));
-  }, [id]);
-  // use effect with empty dependency array
-  // dispatch action with board id
-  // fetchBoard returns synchronous function that
-  // will dispatch GET request
+  }, [dispatch, id]);
 
   if (!board) {
     return null
@@ -32,9 +27,9 @@ const Board = (props) => {
 
   return (
     <>
-       <header>
+      <header>
         <ul>
-          <li id="title">My Title</li>
+          <li id="title">{board.title}</li>
           <li className="star-icon icon"></li>
           <li className="private private-icon icon">Private</li>
         </ul>
@@ -48,7 +43,7 @@ const Board = (props) => {
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-            {lists.map((list) => <List key={list._id} listId={list._id} />)}      
+            {lists.map((list) => <List key={list._id} listId={list._id} />)}
           </div>
           <div id="new-list" className="new-list">
             <span>Add a list...</span>
