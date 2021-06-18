@@ -9,7 +9,5 @@ router.get("/boards/:id", boardsController.getBoardById);
 
 router.post("/boards", validateBoard, boardsController.createBoard);
 router.post("/lists", listsController.createList, boardsController.addToLists, listsController.sendNewListRes);
-//call a board controller that updates `lists` property of board with
-//json.boardId. adds response list to `lists`
 
 module.exports = router;

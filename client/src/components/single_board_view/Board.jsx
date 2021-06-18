@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../actions/BoardActions";
 import List from "./List";
+import NewListButton from "./NewListButton"
 
 const Board = (props) => {
   const id = props.match.params.id;
@@ -45,14 +46,7 @@ const Board = (props) => {
           <div id="existing-lists" className="existing-lists">
             {lists.map((list) => <List key={list._id} listId={list._id} />)}
           </div>
-          <div id="new-list" className="new-list">
-            <span>Add a list...</span>
-            <input type="text" placeholder="Add a list..." />
-            <div>
-              <input type="submit" className="button" value="Save" />
-              <i className="x-icon icon"></i>
-            </div>
-          </div>
+          <NewListButton boardId={id} />
         </div>
       </main>
       <div className="menu-sidebar">

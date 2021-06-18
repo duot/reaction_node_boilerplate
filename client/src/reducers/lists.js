@@ -14,6 +14,10 @@ export default function lists(state = [], action) {
       return filteredState.concat(listsWithoutCards);
     }
 
+    case "CREATE_NEW_LIST_SUCCESS": {
+      return state.concat(action.newList)
+    }
+
     default:
       return state;
   }

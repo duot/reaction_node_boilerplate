@@ -25,6 +25,10 @@ export function createBoardSuccess(board) {
   return { type: types.CREATE_BOARD_SUCCESS, board: board };
 }
 
+export function createNewListSuccess(data) {
+  return { type: types.CREATE_NEW_LIST_SUCCESS, newList: data };
+}
+
 export function fetchBoard(id) {
   return function (dispatch) {
     dispatch(fetchBoardRequest());
@@ -50,4 +54,12 @@ export function createBoard(board, callback) {
       }
     });
   };
+}
+
+export function createNewList(title, boardId) {
+  return function (dispatch) {
+    apiClient.createNewList(title, boardId, (data) => {
+      dispatch(createNewListSuccess(data))
+    })
+  }
 }
