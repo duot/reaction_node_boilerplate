@@ -40,6 +40,13 @@ const getBoardById = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+const addToLists = (req, res, next) => {
+  Board.findByIdAndUpdate(res.list.boardId, {
+    $addToSet: { lists: [res.list._id] }
+  }).then(() => next())
+}
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
 exports.getBoardById = getBoardById;
+exports.addToLists = addToLists;

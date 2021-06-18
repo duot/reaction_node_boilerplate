@@ -13,7 +13,9 @@ const createList = (req, res, next) => {
       cards: [],
     })
       .then((list) => {
-        res.json({ list });
+        //res.json({ list });
+        res.list = list
+        next();
       })
       .catch((error) => {
         next(new HttpError("Creating list failed, please try again", 500));
@@ -23,4 +25,9 @@ const createList = (req, res, next) => {
   }
 };
 
+const sendNewListRes = (req, res, next) => {
+  res.json(res.list)
+}
+
 exports.createList = createList;
+exports.sendNewListRes = sendNewListRes;
