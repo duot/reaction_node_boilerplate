@@ -2,7 +2,7 @@ import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
 export function createNewListSuccess(data) {
-  return { type: types.CREATE_NEW_LIST_SUCCESS, newList: data };
+  return { type: types.CREATE_LIST_SUCCESS, newList: data };
 }
 
 export function createNewList(title, boardId) {
