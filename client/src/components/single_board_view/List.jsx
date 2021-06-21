@@ -29,7 +29,7 @@ export default function List({ listId }) {
           <a className="more-icon sm-icon" href=""></a>
           <div>
             {titleEditable ?
-              <input autoFocus="autofocus" type="text" value={editedTitle}
+              <input className="list-title" autoFocus="autofocus" type="text" value={editedTitle}
                 onBlur={titleUnclicked} onChange={(e) => setEditedTitle(e.target.value)}></input> :
               <p className="list-title" onClick={titleClicked}>{list.title}</p>}
           </div>
