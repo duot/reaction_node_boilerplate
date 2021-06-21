@@ -13,8 +13,7 @@ const createList = (req, res, next) => {
       cards: [],
     })
       .then((list) => {
-        //res.json({ list });
-        res.list = list
+        req.list = list
         next();
       })
       .catch((error) => {
@@ -26,7 +25,7 @@ const createList = (req, res, next) => {
 };
 
 const sendNewListRes = (req, res, next) => {
-  res.json(res.list)
+  res.json(req.list)
 }
 
 exports.createList = createList;

@@ -41,8 +41,8 @@ const getBoardById = (req, res, next) => {
 };
 
 const addToLists = (req, res, next) => {
-  Board.findByIdAndUpdate(res.list.boardId, {
-    $addToSet: { lists: [res.list._id] }
+  Board.findByIdAndUpdate(req.list.boardId, {
+    $addToSet: { lists: [req.list._id] }
   }).then(() => next())
 }
 
