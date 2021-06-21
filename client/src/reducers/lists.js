@@ -18,6 +18,14 @@ export default function lists(state = [], action) {
       return state.concat(action.newList)
     }
 
+    case "UPDATE_LIST_SUCCESS": {
+      const filteredState = state.filter(list => {
+        return list._id !== action.updatedList._id;
+      });
+
+      return filteredState.concat(action.updatedList);
+    }
+
     default:
       return state;
   }

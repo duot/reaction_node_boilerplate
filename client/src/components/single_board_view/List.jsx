@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Card from "./Card"
+import Card from "./Card";
+import { updateList } from '../../actions/ListActions';
 
 export default function List({ listId }) {
-  const [titleEditable, setTitleEditable] = useState(false);
-  const [editedTitle, setEditedTitle] = useState("")
-  //^change so default value is current list title
-  const cards = useSelector(state => state.cards.filter((card) => {
-    return card.listId === listId
-  }))
+  const dispatch = useDispatch();
 
   const list = useSelector(state => state.lists.find((list) => {
     return list._id === listId
+  }))
+
+  const [titleEditable, setTitleEditable] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(list.title)
+  const cards = useSelector(state => state.cards.filter((card) => {
+    return card.listId === listId
   }))
 
   const titleClicked = () => {
@@ -19,7 +21,27 @@ export default function List({ listId }) {
   }
 
   const titleUnclicked = () => {
-    setTitleEditable(false)
+    updateListIfChanged();
+  }
+
+  const handleKeyPresses = (event) => {
+    switch (event.key) {
+      case 'Escape':
+        setEditedTitle(list.title);
+        return setTitleEditable(false);
+      case 'Enter':
+      case 'Tab':
+        return updateListIfChanged();
+    }
+  }
+
+  const updateListIfChanged = () => {
+    setTitleEditable(false);
+    if (list.title === editedTitle || editedTitle === '') {
+      setEditedTitle(list.title);
+      return;
+    }
+    dispatch(updateList(list._id, editedTitle, list.position));
   }
 
   return (
@@ -30,7 +52,8 @@ export default function List({ listId }) {
           <div>
             {titleEditable ?
               <input className="list-title" autoFocus="autofocus" type="text" value={editedTitle}
-                onBlur={titleUnclicked} onChange={(e) => setEditedTitle(e.target.value)}></input> :
+                onBlur={titleUnclicked} onChange={(e) => setEditedTitle(e.target.value)}
+                onKeyDown={handleKeyPresses}></input> :
               <p className="list-title" onClick={titleClicked}>{list.title}</p>}
           </div>
           <div className="add-dropdown add-top">
