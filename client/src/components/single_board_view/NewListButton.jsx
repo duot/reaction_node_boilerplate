@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../../actions/BoardActions";
+import { useDispatch } from "react-redux";
+import * as actions from "../../actions/ListActions";
 
 const NewListButton = ({ boardId }) => {
   const [selected, setSelected] = useState(false)
