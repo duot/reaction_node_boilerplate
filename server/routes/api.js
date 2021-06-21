@@ -9,5 +9,6 @@ router.get("/boards/:id", boardsController.getBoardById);
 
 router.post("/boards", validateBoard, boardsController.createBoard);
 router.post("/lists", listsController.createList, boardsController.addToLists, listsController.sendNewListRes);
+router.put("/lists/:id", listsController.getListById, listsController.updateList, listsController.sendNewListRes);
 
 module.exports = router;

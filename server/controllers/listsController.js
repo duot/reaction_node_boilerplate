@@ -28,5 +28,34 @@ const sendNewListRes = (req, res, next) => {
   res.json(req.list)
 }
 
+const getListById = (req, res, next) => {
+  const { id } = req.params;
+  List.findById(id)
+    .then((list) => {
+      req.list = list;
+      next();
+    })
+    .catch(error => next(new HttpError("Could not find list.", 404)));
+}
+
+const updateList = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    const list = req.list;
+    const json = req.body;
+
+    List.findByIdAndUpdate(list.id, { title: json.title || list.title },
+      { new: true })
+    .then((updatedList) => {
+      req.list = updatedList;
+      next();
+    });
+  } else {
+    return next(new HttpError("The input field is empty.", 404));
+  }
+}
+
 exports.createList = createList;
 exports.sendNewListRes = sendNewListRes;
+exports.getListById = getListById;
+exports.updateList = updateList;
