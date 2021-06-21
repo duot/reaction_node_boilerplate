@@ -14,7 +14,7 @@ const NewListButton = ({ boardId }) => {
       return;
     }
 
-    dispatch(actions.createNewList(typedTitle, boardId));
+    dispatch(actions.createList(typedTitle, boardId));
     toggleSelected();
     setTypedTitle("");
   }

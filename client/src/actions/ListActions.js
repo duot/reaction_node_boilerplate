@@ -1,14 +1,14 @@
 import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
-export function createNewListSuccess(data) {
+export function createListSuccess(data) {
   return { type: types.CREATE_LIST_SUCCESS, newList: data };
 }
 
-export function createNewList(title, boardId) {
+export function createList(title, boardId) {
   return function (dispatch) {
-    apiClient.createNewList(title, boardId, (data) => {
-      dispatch(createNewListSuccess(data));
+    apiClient.createList(title, boardId, (data) => {
+      dispatch(createListSuccess(data));
     });
   }
 }
