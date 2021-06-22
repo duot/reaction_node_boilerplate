@@ -2,7 +2,7 @@ POST http://localhost:5000/api/cards
 Content-Type: application/json
 
 {
-	"listId": "60cb869b30044b9a2205acb2",
+	"listId": "60ca181a138543c621250984",
 	"card": {
 		"title": "Post card from Barcelona"
 	}
