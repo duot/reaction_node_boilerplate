@@ -13,7 +13,7 @@ const createList = (req, res, next) => {
       cards: [],
     })
       .then((list) => {
-        req.list = list
+        req.list = list;
         next();
       })
       .catch((error) => {
@@ -25,8 +25,8 @@ const createList = (req, res, next) => {
 };
 
 const sendNewListRes = (req, res, next) => {
-  res.json(req.list)
-}
+  res.json(req.list);
+};
 
 const getListById = (req, res, next) => {
   const { id } = req.params;
@@ -35,8 +35,8 @@ const getListById = (req, res, next) => {
       req.list = list;
       next();
     })
-    .catch(error => next(new HttpError("Could not find list.", 404)));
-}
+    .catch((error) => next(new HttpError("Could not find list.", 404)));
+};
 
 const updateList = (req, res, next) => {
   const errors = validationResult(req);
@@ -44,16 +44,18 @@ const updateList = (req, res, next) => {
     const list = req.list;
     const json = req.body;
 
-    List.findByIdAndUpdate(list.id, { title: json.title || list.title },
-      { new: true })
-    .then((updatedList) => {
+    List.findByIdAndUpdate(
+      { _id: list._id },
+      { title: json.title || list.title },
+      { new: true }
+    ).then((updatedList) => {
       req.list = updatedList;
       next();
     });
   } else {
     return next(new HttpError("The input field is empty.", 404));
   }
-}
+};
 
 exports.createList = createList;
 exports.sendNewListRes = sendNewListRes;
