@@ -14,9 +14,11 @@ const CardSchema = new Schema(
     },
     boardId: {
       type: Schema.Types.ObjectId,
-      ref: "Board"
+      ref: "Board",
     },
-    commentsCount: Number
+    commentsCount: Number,
+    completed: Boolean,
+    archived: Boolean,
   },
   {
     timestamps: true,
