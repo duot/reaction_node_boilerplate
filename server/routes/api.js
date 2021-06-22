@@ -23,5 +23,6 @@ router.put(
 );
 
 router.get("/cards/:id", cardsController.getCard, cardsController.sendCard);
+router.post("/cards/", cardsController.createCard, cardsController.sendCard);
 
 module.exports = router;

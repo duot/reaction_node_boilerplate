@@ -37,14 +37,16 @@ const getBoardById = (req, res, next) => {
       }
       res.json(board);
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 const addToLists = (req, res, next) => {
   Board.findByIdAndUpdate(req.list.boardId, {
-    $addToSet: { lists: [req.list._id] }
-  }).then(() => next())
-}
+    $addToSet: { lists: [req.list._id] },
+  }).then(() => next());
+};
+
+const getBoardByListId = (req, res, next) => {};
 
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
