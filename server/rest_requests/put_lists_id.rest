@@ -1,0 +1,7 @@
+PUT http://localhost:3000/api/lists/60cb869b30044b9a2205acb2
+Content-Type: application/json
+
+{
+	"title": "Least awesomost title",
+	"position": 1
+}
