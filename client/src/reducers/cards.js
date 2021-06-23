@@ -11,6 +11,13 @@ export default function cards(state = [], action) {
 
       return filteredState.concat(cards);
     }
+    case "FETCH_CARD_SUCCESS": {
+      const filteredState = state.filter((card) => {
+        card._id !== action.card._id;
+      });
+
+      return filteredState.concat(action.card);
+    }
 
     default:
       return state;
