@@ -1,33 +1,81 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import Board from "../single_board_view/Board"
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom"
+import * as actions from "../../actions/CardActions";
+
 const SingleCard = (props) => {
 	const cardId = props.match.params.id
 	const card = useSelector(state => state.cards.find((card) => {
-		return card._id === cardId
+		return card._id === cardId;
+	}));
+	const list = useSelector(state => state.lists.find((list) => {
+		return list._id === card.listId;
 	}))
-
-	// useEffect(
-	//get / api / cards / cardId
-	// )
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (!cardId) return;
+		dispatch(actions.fetchCard(cardId));
+	}, [dispatch, cardId]);
 
 	if (!card) {
-		return null
+		return null;
+	}
+	if (!list) {
+		return null;
 	}
 
+	const date = new Date(card.dueDate)
+	const months = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	]
+
+	function formatAMPM(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = hours + ':' + minutes + ' ' + ampm;
+		return strTime;
+	}
+	const dateString = (
+		months[date.getMonth()] +
+		" " +
+		date.getDate() +
+		" at " +
+		formatAMPM(date)
+	)
+	const pastDue = date > Date.now() ? "" : "(past due)";
+
+	if (!card) {
+		return null;
+	}
 	return (
 		<div id="modal-container">
 			<div className="screen"></div>
 			<div id="modal">
-				<i className="x-icon icon close-modal"></i>
+				<Link to={`/boards/${card.boardId}`}>
+					<i className="x-icon icon close-modal"></i>
+				</Link>
 				<header>
 					<i className="card-icon icon .close-modal"></i>
 					<textarea className="list-title" style={{ height: "45px" }}>
-						Cards do many cool things. Click on this card to open it and learn
-						more...
+						{card.title}
 					</textarea>
 					<p>
-						in list <a className="link">Stuff to try (this is a list)</a>
+						in list <a className="link" href={`/boards/${card.boardId}`}>{list.title}</a>
 						<i className="sub-icon sm-icon"></i>
 					</p>
 				</header>
@@ -37,24 +85,13 @@ const SingleCard = (props) => {
 							<ul className="modal-details-list">
 								<li className="labels-section">
 									<h3>Labels</h3>
-									<div className="member-container">
-										<div className="green label colorblindable"></div>
-									</div>
-									<div className="member-container">
-										<div className="yellow label colorblindable"></div>
-									</div>
-									<div className="member-container">
-										<div className="orange label colorblindable"></div>
-									</div>
-									<div className="member-container">
-										<div className="blue label colorblindable"></div>
-									</div>
-									<div className="member-container">
-										<div className="purple label colorblindable"></div>
-									</div>
-									<div className="member-container">
-										<div className="red label colorblindable"></div>
-									</div>
+									{card.labels.map((color) => {
+										return (
+											<div className="member-container">
+												<div className={`${color} label colorblindable`}></div>
+											</div>
+										)
+									})}
 									<div className="member-container">
 										<i className="plus-icon sm-icon"></i>
 									</div>
@@ -66,20 +103,17 @@ const SingleCard = (props) => {
 											id="dueDateCheckbox"
 											type="checkbox"
 											className="checkbox"
-											checked=""
+											checked={card.completed}
 										/>
-										Aug 4 at 10:42 AM <span>(past due)</span>
+										{dateString} <span>{pastDue}</span>
 									</div>
 								</li>
 							</ul>
 							<form className="description">
-								<p>Description</p>
+								<p>{card.description}</p>
 								<span id="description-edit" className="link">
 									Edit
 								</span>
-								<p className="textarea-overlay">
-									Cards have a symbol to indicate if they contain a description.
-								</p>
 								<p id="description-edit-options" className="hidden">
 									You have unsaved edits on this field.{" "}
 									<span className="link">View edits</span> -{" "}
