@@ -39,7 +39,7 @@ export default function Card({ cardId }) {
 						<i className="clock-icon sm-icon overdue-recent completed">
 							{dateString}
 						</i>
-						{card.description ? <i className="description-icon sm-icon"></i> : "No description"}
+						{card.description ? <i className="description-icon sm-icon"></i> : null}
 						{/*{card.comments.length > 0 ? null : <i className="comment-icon sm-icon"></i> }...clean database first*/}
 					</div>
 				</div>

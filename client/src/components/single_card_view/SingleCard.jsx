@@ -72,7 +72,7 @@ const SingleCard = (props) => {
 				<header>
 					<i className="card-icon icon .close-modal"></i>
 					<textarea className="list-title" style={{ height: "45px" }}>
-						{card.title}
+						{card.title ? card.title : "Untitled"}
 					</textarea>
 					<p>
 						in list <a className="link" href={`/boards/${card.boardId}`}>{list.title}</a>
@@ -110,7 +110,7 @@ const SingleCard = (props) => {
 								</li>
 							</ul>
 							<form className="description">
-								<p>{card.description}</p>
+								<p>{card.description ? card.description : "No description"}</p>
 								<span id="description-edit" className="link">
 									Edit
 								</span>
