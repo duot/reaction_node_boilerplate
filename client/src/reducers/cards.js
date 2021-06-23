@@ -18,6 +18,9 @@ export default function cards(state = [], action) {
 
       return filteredState.concat(action.card);
     }
+    case "ADD_CARD_SUCCESS": {
+      return state.concat(action.card)
+    }
 
     default:
       return state;
