@@ -5,16 +5,28 @@ import List from "./List";
 import NewListButton from "./NewListButton"
 
 const Board = (props) => {
-  const id = props.match.params.id;
-
+  let id;
   const dispatch = useDispatch();
+  const state = useSelector(state => state);
+
+  const { url } = props.match
+  if (url.match(new RegExp("^/boards/"))) {
+    id = props.match.params.id;
+  } else {
+    const cardId = props.match.params.id
+    const card = state.cards.find((card) => card._id === cardId)
+
+    if (card) {
+      id = card.boardId;
+    }
+  }
 
   const lists = useSelector((state) => state.lists.filter((list) => {
-    return list.boardId === id
+    return list.boardId === id;
   }))
 
   const board = useSelector((state) => state.boards.find((board) => {
-    return board._id === id
+    return board._id === id;
   }))
 
   useEffect(() => {
