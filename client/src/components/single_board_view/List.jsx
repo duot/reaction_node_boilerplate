@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from "./Card";
 import { updateList } from '../../actions/ListActions';
+import { addCard } from '../../actions/CardActions'
+import useInput from "../../hooks/useInput"
 
 export default function List({ listId }) {
   const dispatch = useDispatch();
@@ -44,8 +46,21 @@ export default function List({ listId }) {
     dispatch(updateList(list._id, editedTitle, list.position));
   }
 
+  const closeAddCardForm = (e) => {
+    formShowing.reset();
+    newCardTitle.reset();
+  }
+
+  const handleAddCard = (e) => {
+    dispatch(addCard(list._id, newCardTitle.value))
+    newCardTitle.reset();
+  }
+
+  const newCardTitle = useInput("")
+  const formShowing = useInput(false);
+
   return (
-    <div className="list-wrapper">
+    <div className={`list-wrapper ${formShowing.value ? "add-dropdown-active" : ""}`}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -67,19 +82,19 @@ export default function List({ listId }) {
           <div id="cards-container" data-id="list-1-cards">
             {cards.map(card => <Card key={card._id} cardId={card._id} />)}
           </div>
-          <div className="add-dropdown add-bottom">
+          <div className={`add-dropdown add-bottom ${formShowing.value ? "active-card" : ""}`}>
             <div className="card">
               <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
+              <textarea name="add-card" value={newCardTitle.value} onChange={(e) => newCardTitle.setValue(e.target.value)}></textarea>
               <div className="members"></div>
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+            <a className="button" onClick={handleAddCard}>Add</a>
+            <i className="x-icon icon" onClick={closeAddCardForm}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div className="add-card-toggle" data-position="bottom">
+          <div className="add-card-toggle" data-position="bottom" onClick={() => formShowing.setValue(true)}>
             Add a card...
           </div>
         </div>
