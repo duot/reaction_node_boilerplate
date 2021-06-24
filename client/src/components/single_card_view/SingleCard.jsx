@@ -17,6 +17,29 @@ const SingleCard = (props) => {
 		dispatch(actions.fetchCard(cardId));
 	}, [dispatch, cardId]);
 
+	const populateTitle = () => {
+		return card.title ? card.title : "Untitled";
+	};
+
+  const handleTitleKeyPresses = (event) => {
+    switch (event.key) {
+      case 'Escape':
+				return event.currentTarget.value = populateTitle();
+      case 'Enter':
+      case 'Tab':
+        return updateCardIfChanged(event.currentTarget);
+    }
+  };
+
+  const updateCardIfChanged = (textarea) => {
+		const editedTitle = textarea.value;
+    if (card.title === editedTitle || editedTitle === '') {
+			textarea.value = populateTitle();
+      return;
+    }
+		dispatch(actions.updateCard(card._id, { title: editedTitle }));
+  };
+
 	if (!card) {
 		return null;
 	}
@@ -24,7 +47,7 @@ const SingleCard = (props) => {
 		return null;
 	}
 
-	const date = new Date(card.dueDate)
+	const date = new Date(card.dueDate);
 	const months = [
 		"Jan",
 		"Feb",
@@ -38,7 +61,7 @@ const SingleCard = (props) => {
 		"Oct",
 		"Nov",
 		"Dec",
-	]
+	];
 
 	function formatAMPM(date) {
 		var hours = date.getHours();
@@ -56,7 +79,7 @@ const SingleCard = (props) => {
 		date.getDate() +
 		" at " +
 		formatAMPM(date)
-	)
+	);
 	const pastDue = date > Date.now() ? "" : "(past due)";
 
 	if (!card) {
@@ -71,8 +94,9 @@ const SingleCard = (props) => {
 				</Link>
 				<header>
 					<i className="card-icon icon .close-modal"></i>
-					<textarea className="list-title" style={{ height: "45px" }}>
-						{card.title ? card.title : "Untitled"}
+					<textarea className="list-title" style={{ height: "45px" }}
+            onKeyDown={handleTitleKeyPresses}>
+						{populateTitle()}
 					</textarea>
 					<p>
 						in list <a className="link" href={`/boards/${card.boardId}`}>{list.title}</a>
@@ -284,4 +308,3 @@ const SingleCard = (props) => {
 };
 
 export default SingleCard;
-

@@ -21,6 +21,13 @@ export default function cards(state = [], action) {
     case "ADD_CARD_SUCCESS": {
       return state.concat(action.card)
     }
+    case "UPDATE_CARD_SUCCESS": {
+      const filteredState = state.filter((card) => {
+        card._id !== action.card._id;
+      });
+
+      return filteredState.concat(action.card);
+    }
 
     default:
       return state;
