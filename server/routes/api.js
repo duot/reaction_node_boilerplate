@@ -29,5 +29,11 @@ router.post(
   listsController.addCardToList,
   cardsController.sendCard
 );
+router.put(
+  "/cards/:id",
+  cardsController.getCard,
+  cardsController.updateCard,
+  cardsController.sendCard
+);
 
 module.exports = router;

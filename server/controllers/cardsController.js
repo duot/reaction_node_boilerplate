@@ -50,6 +50,25 @@ const createCard = (req, res, next) => {
   }
 };
 
+const updateCard = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    const card = req.card;
+    const json = req.body;
+    Card.findByIdAndUpdate(
+      { _id: card._id },
+      { ...json.card },
+      { new: true }
+    ).then((updatedCard) => {
+      req.card = updatedCard;
+      next();
+    });
+  } else {
+    next(new HttpError("Card title is required.", 422));
+  }
+};
+
 exports.getCard = getCard;
 exports.sendCard = sendCard;
 exports.createCard = createCard;
+exports.updateCard = updateCard;
