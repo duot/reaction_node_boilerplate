@@ -33,7 +33,7 @@ export default function Card({ cardId }) {
 					<i className="edit-toggle edit-icon sm-icon"></i>
 					<div className="card-info">
 						{card.labels.map((label) => <CardLabel key={label} label={label} />)}
-						<p>{card.description}</p>
+						<p>{card.title}</p>
 					</div>
 					<div className="card-icons">
 						<i className="clock-icon sm-icon overdue-recent completed">
