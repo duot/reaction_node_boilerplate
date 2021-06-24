@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../actions/BoardActions";
-import List from "./List";
-import NewListButton from "./NewListButton"
+import Lists from "./Lists";
 
 const Board = (props) => {
   let id;
@@ -13,17 +12,13 @@ const Board = (props) => {
   if (url.match(new RegExp("^/boards/"))) {
     id = props.match.params.id;
   } else {
-    const cardId = props.match.params.id
-    const card = state.cards.find((card) => card._id === cardId)
+    const cardId = props.match.params.id;
+    const card = state.cards.find((card) => card._id === cardId);
 
     if (card) {
       id = card.boardId;
     }
   }
-
-  const lists = useSelector((state) => state.lists.filter((list) => {
-    return list.boardId === id;
-  }))
 
   const board = useSelector((state) => state.boards.find((board) => {
     return board._id === id;
@@ -35,7 +30,7 @@ const Board = (props) => {
   }, [dispatch, id]);
 
   if (!board) {
-    return null
+    return null;
   }
 
   return (
@@ -54,12 +49,7 @@ const Board = (props) => {
         </div>
       </header>
       <main>
-        <div id="list-container" className="list-container">
-          <div id="existing-lists" className="existing-lists">
-            {lists.map((list) => <List key={list._id} listId={list._id} />)}
-          </div>
-          <NewListButton boardId={id} />
-        </div>
+        <Lists boardId={id} />
       </main>
       <div className="menu-sidebar">
         <div id="menu-main" className="main slide">
